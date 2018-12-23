@@ -1,4 +1,4 @@
-ROM netskol/gosted:latest AS gosted
+FROM netskol/gosted:latest AS gosted
 FROM nginx:1.15.7
 
 COPY --from=gosted /usr/lib/x86_64-linux-gnu/engines-1.1/gost.so /usr/lib/x86_64-linux-gnu/engines-1.1/gost.so
