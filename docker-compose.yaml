@@ -1,0 +1,31 @@
+version: '3.6'
+
+volumes:
+  nginx_conf:
+    external: true
+
+services:
+  gost_nginx:
+    image: netskol/nginx-gosted:latest
+    restart: always
+    networks:
+      - web
+    ports:
+      - 80:80
+      - 443:443
+    expose:
+      - "80"
+      - "443"
+    volumes:
+      - type: volume
+        source: nginx_conf
+        target: /etc/nginx
+        volume:
+          readonly: true
+    environment:
+      - TZ=Europe/Moscow
+    labels:
+       - "nginx-gosted.docker.network=web"
+networks:
+  web:
+    external: true
