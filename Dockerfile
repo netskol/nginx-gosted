@@ -1,4 +1,4 @@
-FROM nginx:1.15.8
+FROM nginx:1.15.9
 
 RUN set -eux \
   && export OPENSSL_CONF=/etc/ssl/openssl.cnf \
