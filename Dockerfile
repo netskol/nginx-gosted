@@ -1,8 +1,8 @@
-FROM nginx:1.17.3
+FROM nginx:1.19.3
 
 RUN set -eux \
   && export OPENSSL_CONF=/etc/ssl/openssl.cnf \
-  && export GOST_PACKAGE=libengine-gost-openssl1.1_1.1.0.3-1+b1_amd64.deb \
+  && export GOST_PACKAGE=libengine-gost-openssl1.1_1.1.0.3-1_amd64.deb \
   && apt-get update \
   && apt-get install openssl wget -y \
   # get Gost engine deb packet
