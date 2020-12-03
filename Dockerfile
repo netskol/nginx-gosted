@@ -9,10 +9,14 @@ RUN set -eux \
   && cd /tmp && wget http://ftp.ru.debian.org/debian/pool/main/libe/libengine-gost-openssl1.1/"${GOST_PACKAGE}" \
   && dpkg -i /tmp/"${GOST_PACKAGE}" \
   # enable GOST engine
-  && sed -i '/\[default_conf\]/ a engines = engine_section' "${OPENSSL_CONF}" \
+  # enable GOST engine
+  && sed -i '6i openssl_conf=openssl_def' "${OPENSSL_CONF}" \
+  && echo "" >> "${OPENSSL_CONF}" \
+  && echo "# OpenSSL default section" >> "${OPENSSL_CONF}" \
+  && echo "[openssl_def]" >> "${OPENSSL_CONF}" \
   && echo "engines = engine_section" >> "${OPENSSL_CONF}" \
   && echo "" >> "${OPENSSL_CONF}" \
-  && echo "# Engine section" >> "${OPENSSL_CONF}" \
+  && echo "# Engine scetion" >> "${OPENSSL_CONF}" \
   && echo "[engine_section]" >> "${OPENSSL_CONF}" \
   && echo "gost = gost_section" >> "${OPENSSL_CONF}" \
   && echo "" >> "${OPENSSL_CONF}" \
