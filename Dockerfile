@@ -1,6 +1,5 @@
 FROM nginx:1.19.6
 
-
 RUN set -eux \
   && export ARCH=$(uname -m) \
   && export OPENSSL_CONF=/etc/ssl/openssl.cnf \
