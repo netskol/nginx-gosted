@@ -32,5 +32,5 @@ jobs:
           platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
           push: true
           tags: |
-            netskol/nginx-gosted:2020
-            netskol/nginx-gosted:3.0.0
+            netskol/nginx-gosted:latest
+            netskol/nginx-gosted:1.19.6
