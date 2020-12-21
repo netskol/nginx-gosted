@@ -3,8 +3,12 @@ FROM nginx:1.19.6
 RUN set -eux \
   && export ARCH=$(uname -m) \
   && export OPENSSL_CONF=/etc/ssl/openssl.cnf \
+  && export GOST_PACKAGE=libengine-gost-openssl1.1_1.1.0.3-1_amd64.deb \
   && apt-get update \
-  && apt-get install libengine-gost-openssl1.1 -y \
+  && apt-get install openssl wget -y \
+  # get Gost engine deb packet
+  && cd /tmp && wget http://ftp.ru.debian.org/debian/pool/main/libe/libengine-gost-openssl1.1/"${GOST_PACKAGE}" \
+  && dpkg -i /tmp/"${GOST_PACKAGE}" \
   # enable GOST engine
   && sed -i '/\[default_conf\]/ a engines = engine_section' "${OPENSSL_CONF}" \
   && echo "" >> "${OPENSSL_CONF}" \
