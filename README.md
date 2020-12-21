@@ -1,5 +1,5 @@
 ## nginx-gosted  
-This is a docker image based on latest nginx with OpenSSL and GOST engine wich supports the Russian ГОСТ crypto algorithms. 
+This is a docker image based on Nginx with OpenSSL and GOST engine which supports the Russian ГОСТ crypto algorithms. 
 
 
 ![alt text](https://img.shields.io/badge/OpenSSL-GOSTengine-blue.svg 'openssl and gost engine included')
@@ -10,7 +10,6 @@ This is a docker image based on latest nginx with OpenSSL and GOST engine wich s
 
 Use Dockerfile to build a docker image with latest nginx, openssl and gost engine.  
 You can also find this image on docker hub [netskol/nginx-gosted](https://hub.docker.com/r/netskol/nginx-gosted)
-The GOST engine is in the file gost.so, which has been copied from netskol/gosted image.  
 
 ---
    
