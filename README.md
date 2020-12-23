@@ -22,3 +22,6 @@ Edit docker-compose YAML file according to your needs and start the project:
 ```bash
 docker-compose up -d
 ```
+
+Images tagged latest and 1.19.6 tested with CryptoPro 5.0 ,so far only tls1.0 works. 
+Images from the branch based2018 tested with CryptoPro 5.0 and tls1-tls1.2 works.

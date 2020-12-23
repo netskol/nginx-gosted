@@ -27,17 +27,14 @@ RUN set -eux \
   && echo "dynamic_path = /usr/lib/"${ARCH}"-linux-gnu/engines-1.1/gost.so" >> "${OPENSSL_CONF}" \
   && echo "default_algorithms = ALL" >> "${OPENSSL_CONF}" \
   && echo "CRYPT_PARAMS = id-Gost28147-89-CryptoPro-A-ParamSet" >> "${OPENSSL_CONF}" \
-  ## just for compatibility with older browsers, you may delete those two lines
-  && sed -i 's/@SECLEVEL=2/@SECLEVEL=1/g' "${OPENSSL_CONF}" \
-  && sed -i 's/TLSv1.2/TLSv1/g' "${OPENSSL_CONF}" \
-  # clean up
+   # clean up
   && unset OPENSSL_CONF \
   && rm -rf /var/lib/apt/lists/*
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
         && ln -sf /dev/stderr /var/log/nginx/error.log
 
-EXPOSE 80
+EXPOSE 80 443
 
 STOPSIGNAL SIGTERM
 
