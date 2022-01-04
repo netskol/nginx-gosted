@@ -1,4 +1,4 @@
-FROM nginx:1.19.6
+FROM nginx:1.21.5
 
 RUN set -eux \
   && apt-get update \
