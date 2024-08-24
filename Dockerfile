@@ -1,4 +1,4 @@
-FROM nginx:1.25-bookworm
+FROM nginx:1.27.1-bookworm
 
 RUN set -eux \
   && export OPENSSL_CONF=/etc/ssl/openssl.cnf \
