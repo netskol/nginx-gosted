@@ -14,8 +14,12 @@ This is a docker image based on Nginx with OpenSSL and GOST engine which support
  docker run --rm -i netskol/nginx-gosted openssl engine
  docker run --rm -i netskol/nginx-gosted openssl ciphers |tr ":" "\n"| grep GOST
 ```  
-GOST2012-GOST8912-GOST8912  
-GOST2001-GOST89-GOST89  
+GOST2012-MAGMA-MAGMAOMAC
+GOST2012-KUZNYECHIK-KUZNYECHIKOMAC
+LEGACY-GOST2012-GOST8912-GOST8912
+IANA-GOST2012-GOST8912-GOST8912
+GOST2001-GOST89-GOST89
+  
 
 ## Usage Example
 Edit docker-compose YAML file according to your needs and start the project:
@@ -23,5 +27,4 @@ Edit docker-compose YAML file according to your needs and start the project:
 docker compose up -d
 ```
 
-Images tagged latest and 1.19.6 tested with CryptoPro 5.0 ,so far only tls1.0 works. 
-Images from the branch based2018 tested with CryptoPro 5.0 and tls1-tls1.2 works.
+
