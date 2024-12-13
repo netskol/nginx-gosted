@@ -32,5 +32,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            netskol/nginx-gosted:latest
-            netskol/nginx-gosted:1.27.1
+            netskol/nginx-gosted:1.27.3
