@@ -18,7 +18,7 @@ RUN set -eux \
   && echo "dynamic_path = /usr/lib/$(uname -m)-linux-gnu/engines-3/gost.so" >> "${OPENSSL_CONF}" \
   && echo "default_algorithms = ALL" >> "${OPENSSL_CONF}" \
   && echo "CRYPT_PARAMS = id-Gost28147-89-CryptoPro-A-ParamSet" >> "${OPENSSL_CONF}" \
-  # clean up
+  #clean up
   && unset OPENSSL_CONF  \
   && apt-get purge -y --auto-remove \
   && rm -rf /var/lib/apt/lists/*
