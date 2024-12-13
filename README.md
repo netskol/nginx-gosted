@@ -3,8 +3,10 @@ This is a docker image based on Nginx with OpenSSL and GOST engine which support
 
 
 ![alt text](https://img.shields.io/badge/OpenSSL-GOSTengine-blue.svg 'openssl and gost engine included')
-![alt text](https://img.shields.io/badge/NGINX-1.27.1-blue.svg 'based on nginx:latest docker image')
+![alt text](https://img.shields.io/badge/NGINX-1.27.3-blue.svg 'based on nginx:latest docker image')
 ![alt text](https://img.shields.io/badge/ГОСТ-2012-green.svg 'openssl ciphers:GOST2012-GOST8912-GOST8912')
+![alt text](https://img.shields.io/badge/ГОСТ-2012-green.svg 'openssl ciphers:GOST2012-MAGMA-MAGMAOMAC')
+![alt text](https://img.shields.io/badge/ГОСТ-2012-green.svg 'openssl ciphers:GOST2012-KUZNYECHIK-KUZNYECHIKOMAC')
 ![alt text](https://img.shields.io/badge/ГОСТ-2001-red.svg 'openssl ciphers:GOST2001-GOST89-GOST89 for compatibility')
 
 ---
