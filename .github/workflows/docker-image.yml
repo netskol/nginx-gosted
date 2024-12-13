@@ -34,3 +34,4 @@ jobs:
           push: true
           tags: |
             netskol/nginx-gosted:1.27.3
+            etskol/nginx-gosted:latest
