@@ -2,8 +2,12 @@ name: build multiarch Docker image
 
 on:
   push:
+    types:
+      - 'dockerfile'
     paths:
       - Dockerfile
+    
+  
 
 jobs:
   multi:
