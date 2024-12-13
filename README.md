@@ -1,5 +1,5 @@
 ## nginx-gosted  
-This is a docker image based on Nginx with OpenSSL and GOST engine which supports the Russian ГОСТ crypto algorithms. 
+This is a docker image based on Nginx with OpenSSL and GOST engine which supports ГОСТ crypto algorithms. 
 
 
 ![alt text](https://img.shields.io/badge/OpenSSL-GOSTengine-blue.svg 'openssl and gost engine included')
