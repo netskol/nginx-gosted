@@ -4,37 +4,59 @@ on:
   push:
     paths:
       - Dockerfile
+      - openssl-gost.cnf.append
       - .github/workflows/docker-image.yml
-    
-  
+    branches:
+      - master
 
 jobs:
-  multi:
+  build:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v2
-      -
-        name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      -
-        name: Login to DockerHub
-        uses: docker/login-action@v1
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
-        uses: docker/build-push-action@v2
+
+      - name: Extract version
+        id: version
+        run: |
+          VERSION=$(grep -oP "FROM nginx:\K[0-9]+\.[0-9]+\.[0-9]+" Dockerfile)
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
+          cache-from: type=registry,ref=netskol/nginx-gosted:buildcache
+          cache-to: type=registry,ref=netskol/nginx-gosted:buildcache,mode=max
           tags: |
-            netskol/nginx-gosted:1.29.1
+            netskol/nginx-gosted:${{ steps.version.outputs.version }}
             netskol/nginx-gosted:latest
+          outputs: type=oci,dest=/tmp/image
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          input: /tmp/image
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'

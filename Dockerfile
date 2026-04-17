@@ -1,33 +1,29 @@
 FROM nginx:1.29.1-bookworm
 
 RUN set -eux \
-  && export OPENSSL_CONF=/etc/ssl/openssl.cnf \
   && apt-get update \
-  && apt-get install openssl curl libengine-gost-openssl -y \
-  # enable GOST engine
-  && sed -i '/\[openssl_init\]/ a engines = engine_section' "${OPENSSL_CONF}" \
-  && echo "engines = engine_section" >> "${OPENSSL_CONF}" \
-  && echo "" >> "${OPENSSL_CONF}" \
-  && echo "# Engine section" >> "${OPENSSL_CONF}" \
-  && echo "[engine_section]" >> "${OPENSSL_CONF}" \
-  && echo "gost = gost_section" >> "${OPENSSL_CONF}" \
-  && echo "" >> "${OPENSSL_CONF}" \
-  && echo "# Engine gost section" >> "${OPENSSL_CONF}" \
-  && echo "[gost_section]" >> "${OPENSSL_CONF}" \
-  && echo "engine_id = gost" >> "${OPENSSL_CONF}" \
-  && echo "dynamic_path = /usr/lib/$(uname -m)-linux-gnu/engines-3/gost.so" >> "${OPENSSL_CONF}" \
-  && echo "default_algorithms = ALL" >> "${OPENSSL_CONF}" \
-  && echo "CRYPT_PARAMS = id-Gost28147-89-CryptoPro-A-ParamSet" >> "${OPENSSL_CONF}" \
-  #clean up
-  && unset OPENSSL_CONF  \
-  && apt-get purge -y --auto-remove \
+  && apt-get install --no-install-recommends -y \
+    openssl \
+    curl \
+    libengine-gost-openssl \
   && rm -rf /var/lib/apt/lists/*
 
+COPY openssl-gost.cnf.append /tmp/openssl-gost.cnf.append
+
+RUN set -eux \
+  && OPENSSL_CONF=/etc/ssl/openssl.cnf \
+  && sed -i '/\[openssl_init\]/ a engines = engine_section' "${OPENSSL_CONF}" \
+  && cat /tmp/openssl-gost.cnf.append >> "${OPENSSL_CONF}" \
+  && rm /tmp/openssl-gost.cnf.append
+
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
-        && ln -sf /dev/stderr /var/log/nginx/error.log
+  && ln -sf /dev/stderr /var/log/nginx/error.log
 
 EXPOSE 80 443
 
 STOPSIGNAL SIGTERM
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD openssl engine gost && nginx -t || exit 1
 
 CMD ["nginx", "-g", "daemon off;"]

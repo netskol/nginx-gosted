@@ -1,15 +1,43 @@
 services:
   gost_nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: netskol/nginx-gosted:latest
     restart: unless-stopped
     ports:
-      - 80:80
-      - 443:443
-    expose:
-      - "80"
-      - "443"
+      - "80:80"
+      - "443:443"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./certs:/etc/nginx/certs
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+      - nginx_cache:/var/cache/nginx
+      - nginx_logs:/var/log/nginx
     environment:
       - TZ=Europe/Amsterdam
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/log/nginx
+      - /var/run
+
+volumes:
+  nginx_cache:
+  nginx_logs:
