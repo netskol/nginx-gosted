@@ -1,4 +1,4 @@
-FROM nginx:1.29.1-bookworm
+FROM nginx:1.30.0-bookworm
 
 RUN set -eux \
   && apt-get update \

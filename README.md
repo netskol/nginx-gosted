@@ -1,9 +1,9 @@
 # nginx-gosted
 
-A Docker image based on Nginx 1.29.1 with OpenSSL GOST engine support, enabling GOST cryptographic algorithms for secure communication compliant with Russian cryptographic standards.
+A Docker image based on Nginx 1.30.0 with OpenSSL GOST engine support, enabling GOST cryptographic algorithms for secure communication compliant with Russian cryptographic standards.
 
 ![alt text](https://img.shields.io/badge/OpenSSL-GOSTengine-blue.svg 'openssl and gost engine included')
-![alt text](https://img.shields.io/badge/NGINX-1.29.1-blue.svg 'based on nginx:1.29.1 docker image')
+![alt text](https://img.shields.io/badge/NGINX-1.30.0-blue.svg 'based on nginx:1.29.1 docker image')
 ![alt text](https://img.shields.io/badge/ГОСТ-2012-green.svg 'openssl ciphers:GOST2012-GOST8912-GOST8912')
 ![alt text](https://img.shields.io/badge/MAGMA-green.svg 'openssl ciphers:GOST2012-MAGMA-MAGMAOMAC')
 ![alt text](https://img.shields.io/badge/KUZNYECHIK-green.svg 'openssl ciphers:GOST2012-KUZNYECHIK-KUZNYECHIKOMAC')
